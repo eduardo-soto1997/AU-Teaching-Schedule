@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/instructor', 'InstructorController@index');
+Route::post('/instructor', 'InstructorController@store');
+Route::get('/instructor/create', 'InstructorController@create');
+Route::get('/instructor/edit/{post}', 'InstructorController@edit');
+Route::put('/instructor/{instructor}', 'InstructorController@update');

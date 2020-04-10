@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Instructor;
 use Illuminate\Http\Request;
 
+
 class InstructorController extends Controller
 {
     /**
@@ -15,6 +16,10 @@ class InstructorController extends Controller
     public function index()
     {
         //
+      $instructor = Instructor::all();
+      return view('instructor.index', [
+      'instructor' => $instructor
+      ]);
     }
 
     /**
@@ -25,6 +30,7 @@ class InstructorController extends Controller
     public function create()
     {
         //
+        return view('instructor.create');
     }
 
     /**
@@ -36,6 +42,14 @@ class InstructorController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        Instructor::create($request->all());
+
+        return redirect()->route('instructor.index')
+                        ->with('success','Product created successfully.');
     }
 
     /**
@@ -58,6 +72,7 @@ class InstructorController extends Controller
     public function edit(Instructor $instructor)
     {
         //
+        return view('instructor.edit',compact('instructor'));
     }
 
     /**
@@ -70,6 +85,14 @@ class InstructorController extends Controller
     public function update(Request $request, Instructor $instructor)
     {
         //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $product->update($request->all());
+
+        return redirect()->route('instructor.index')
+                        ->with('success','instructor updated successfully');
     }
 
     /**
@@ -81,5 +104,9 @@ class InstructorController extends Controller
     public function destroy(Instructor $instructor)
     {
         //
+        $instructor->delete();
+
+        return redirect()->route('instructor.index')
+                        ->with('success','instructor deleted successfully');
     }
 }
